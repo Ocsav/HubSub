@@ -18,11 +18,11 @@ app.get('/subtitles/:tvshow/:episode', function (req, res) {
     var fs = require('fs');
     var path = require('path');
 
-    var filePath = path.join(__dirname, req.path + "." + req.query.type);
-    fs.readFile(filePath, {encoding: 'utf-8'}, function (err, data) {
-        if (!err) {
+    var filePath = path.join(__dirname, req.path+"."+req.query.type);
+    fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+        if (!err){
             res.send(data)
-        } else {
+        }else{
             console.log(err);
         }
 
