@@ -1,0 +1,77 @@
+html, body{
+    min-height: 100%;
+    min-width: 100%;
+    margin: 0;
+}
+
+body{
+    font-family: Verdana;
+    font-weight: 300;
+    font-size: 0.8em;
+}
+
+h1{
+    margin: 0;
+}
+
+.table{
+    display: table;
+}
+
+.thead{
+    display: table-header-group;
+    font-weight: bold;
+}
+
+.row{
+    display: table-row;
+}
+
+.cell{
+    display: table-cell;
+    border: 1px solid black;
+}
+
+#subtitlesDiv {
+    width: 60%;
+}
+
+#subtitlesArray td{
+    border: 1px solid black;
+}
+
+#divEditEntry{
+    display: block;
+    width: 40%;
+    height: 100%;
+    position: absolute;
+    top: 31.5px;
+    right: 0px;
+    float:right;
+}
+
+.fixed-EditEntry{
+    position: fixed !important;
+    top: 0 !important;
+}
+
+#videoPreviewDiv{
+    height: 300px;
+    background-color: black;
+    text-align: center;
+    color: white;
+}
+
+#videoPreviewDiv p{
+    height: 100%;
+    margin: 0;
+}
+
+#entry{
+    margin-top: 10px;
+    border: solid 1px black;
+}
+
+#lineText {
+    width: 90%;
+}

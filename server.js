@@ -1,5 +1,9 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
+var path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
     var options = {
@@ -14,10 +18,8 @@ app.get('/', function (req, res) {
     res.sendFile('/index.html', options);
 });
 
+//return subtitle raw text
 app.get('/subtitles/:tvshow/:episode', function (req, res) {
-    var fs = require('fs');
-    var path = require('path');
-
     var filePath = path.join(__dirname, req.path+"."+req.query.type);
     fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
         if (!err){

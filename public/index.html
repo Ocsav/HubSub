@@ -3,62 +3,38 @@
 <head>
     <meta charset="utf-8">
     <title>HubSub : The subtitle community</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script>
-        $.ajax({
-            url: '/subtitles/Dragon_Ball_Super/Dragon_Ball_Super_-_01x01?type=srt',
-            complete: function(data) {
-                //Split text, matching double newline
-                rawData = data.responseText.split(/\n\s*\n/g);
-                subtitles = []; //Json array
-                for (entry in rawData){
-                    content = rawData[entry].split(/\n/);
-                    currentJson = {text: ""};
-                    //Iterate over entry params (frame, begin, end, text)
-                    for(param in content){
-                        switch(parseInt(param)) {
-                            case 0:
-                                currentJson['id'] = content[param];
-                                break;
-                            case 1:
-                                beginEnd = content[param].split(" --> ");
-                                currentJson['begin'] = beginEnd[0];
-                                currentJson['end'] = beginEnd[1];
-                                break;
-                            case 2:
-                                currentJson['text'] = content[param];
-                                break;
-
-                            default:
-                                currentJson['text'] += "\n"+content[param];
-                        }
-                    }
-                    subtitles.push(currentJson); //Add currentJson to array subtitles
-                }
-                console.log(subtitles);
-                //Create an HTML table to show subtitles
-                var tbl=$("<table border='1'/>").attr("id","subtitlesArray");
-                var th="<tr><th>#</th><th>Begin</th><th>End</th><th>Text</th></tr>";
-                $("#subtitlesDiv").append(tbl);
-                $("#subtitlesArray").append(th);
-
-                for(var i=0;i<subtitles.length;i++)
-                {
-                    var tr="<tr>";
-                    tr +="<td>"+subtitles[i]["id"]+"</td>";
-                    tr +="<td>"+subtitles[i]["begin"]+"</td>";
-                    tr +="<td>"+subtitles[i]["end"]+"</td>";
-                    tr +="<td>"+subtitles[i]["text"]+"</td></tr>";
-
-                    $("#subtitlesArray").append(tr);
-                }
+    <link rel="stylesheet" href="css/listSubtitles.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/subtitles.js"></script>
+    <script type="text/javascript">
+        $(window).scroll(function(e) {
+            if ($(window).scrollTop() >= 31.5) {
+                $("#divEditEntry").addClass("fixed-EditEntry");
+            } else {
+                $("#divEditEntry").removeClass("fixed-EditEntry");
             }
         });
     </script>
 </head>
-<body>
+<body onload="loadSubtitles()">
     <h1>HubSub</h1>
-    <div id="subtitlesDiv">
+    <div id="subtitlesDiv" class="table">
+    </div>
+    <div id="divEditEntry">
+        <div id="videoPreviewDiv">
+            <p id="videoPreviewText">Exemple de sous-titre</p>
+        </div>
+        <div id="entry">
+            <label for="lineNumber">#: </label><input type="text" id="lineNumber" disabled/>
+            <br />
+            <label for="begin">Begin: </label><input type="text" id="begin"/>
+            --->
+            <label for="end">End: </label><input type="text" id="end"/>
+            <br />
+            <label for="lineText">Text: </label><textarea id="lineText" onchange="$('#videoPreviewText').val('test')"></textarea>
+            <br />
+            <input type="button" value="Save" id="saveButton"/><input type="button" value="Original"/>
+        </div>
     </div>
 </body>
 </html>
